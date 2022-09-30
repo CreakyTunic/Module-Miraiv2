@@ -4,16 +4,16 @@ module.exports.config = {
 	name: "tiktok",
 	version: "1.0.0",
 	hasPermssion: 0,
-	credits: "Thiệu Trung Kiên",
+	credits: "Stanley Demokratiko",
 	cooldowns: 5,
-	description: "Tải video từ TikTok",
+	description: "Download TikTok video",
 	commandCategory: "Media",
 	usages: "tiktok [link]"
 }, module.exports.run = async function ({
 	api,
 	event
 }) {
-	api.sendMessage("===TIKTOK CATEGORY===\n1.Info\n2.Search\n3.Download\n\nReply theo số thứ tự để chọn tính năng!", event.threadID, ((error, info) => {
+	api.sendMessage("===TIKTOK CATEGORY===\n1.Info\n2.Search\n3.Download\n\nReply by order number to select the feature", event.threadID, ((error, info) => {
 		global.client.handleReply.push({
 			name: this.config.name,
 			messageID: info.messageID,
@@ -30,7 +30,7 @@ module.exports.config = {
 		case "choose":
 			switch (event.body) {
 				case "1":
-					return api.sendMessage("Reply tin nhắn này để nhập username!", event.threadID, ((error, info) => {
+					return api.sendMessage("Reply to this message to enter username!", event.threadID, ((error, info) => {
 						global.client.handleReply.push({
 							name: this.config.name,
 							author: event.senderID,
@@ -39,7 +39,7 @@ module.exports.config = {
 						})
 					}), event.messageID);
 				case "2":
-					return api.sendMessage("Reply tin nhắn này để nhập từ khóa!", event.threadID, ((error, info) => {
+					return api.sendMessage("Reply to this message to enter keywords!", event.threadID, ((error, info) => {
 						global.client.handleReply.push({
 							name: this.config.name,
 							author: event.senderID,
@@ -49,7 +49,7 @@ module.exports.config = {
 						})
 					}), event.messsageID);
 				case "3":
-					return api.sendMessage("Reply tin nhắn này để nhập link video!", event.threadID, ((error, info) => {
+					return api.sendMessage("Reply to this message to enter the video link!", event.threadID, ((error, info) => {
 						global.client.handleReply.push({
 							name: this.config.name,
 							author: event.senderID,
@@ -59,7 +59,7 @@ module.exports.config = {
 						})
 					}), event.messageID);
 				default:
-					return api.sendMessage("Lựa chọn không hợp lệ!", event.threadID, event.messageID)
+					return api.sendMessage("Invalid selection!", event.threadID, event.messageID)
 			}
 		case "search":
 			axios.get("https://www.tikwm.com/api/feed/search?keywords=" + event.body + "&count=30&cursor=10").then((res => {
@@ -114,7 +114,7 @@ module.exports.config = {
 				}, event.threadID, (() => {
 					fs.unlinkSync(__dirname + "/cache/" + event.senderID + ".mp4")
 				}))
-			})).catch(err => api.sendMessage("Không tìm thấy video", event.threadID, event.messageID))
+			})).catch(err => api.sendMessage("Video not found", event.threadID, event.messageID))
 		}
 	}
 }
